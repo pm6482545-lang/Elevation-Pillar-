@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elevation Pillar | Academic Excellence</title>
+    <title>Elevation Pillar | Striving for the Peak of Potential</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { 
@@ -13,7 +13,7 @@
             --light-gray: #f8f9fa;
         }
         
-        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--light-gray); color: #333; }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--light-gray); color: #333; scroll-behavior: smooth; }
         
         /* Navigation Bar */
         header { 
@@ -30,7 +30,10 @@
         }
         .logo-box { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
         .logo-img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--gold); background: white; }
-        .nav-links a { color: var(--gold); text-decoration: none; font-weight: bold; margin-left: 20px; font-size: 0.9rem; }
+        
+        .nav-links { display: flex; align-items: center; gap: 15px; }
+        .nav-links a { color: var(--gold); text-decoration: none; font-weight: bold; font-size: 0.85rem; text-transform: uppercase; }
+        .signup-btn { border: 1px solid var(--gold); padding: 5px 15px; border-radius: 5px; }
 
         /* Hero / Introduction */
         .hero { 
@@ -42,11 +45,12 @@
             text-align: center; 
         }
         .hero h1 { font-size: 2.8rem; color: var(--gold); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .hero .motto-text { font-style: italic; font-size: 1.4rem; color: var(--white); margin: 10px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); display: inline-block; padding: 5px 20px; }
         .hero p { font-size: 1.2rem; margin: 20px 0; opacity: 0.9; }
         .cta-main { background: var(--gold); color: var(--cobalt); padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; transition: 0.3s; }
         .cta-main:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
 
-        /* Features Grid (EasyElimu Inspired) */
+        /* Features Grid */
         .section-title { text-align: center; margin-top: 50px; color: var(--cobalt); font-size: 2rem; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 40px 5%; }
         .card { 
@@ -83,6 +87,7 @@
 
         /* Footer Section */
         footer { background: var(--cobalt); color: white; padding: 50px 5% 20px; text-align: center; }
+        .footer-email { color: var(--gold); text-decoration: none; font-weight: bold; font-size: 1.1rem; display: block; margin: 15px 0; }
         .social-icons { margin-bottom: 30px; }
         .social-icons a { 
             color: var(--white); 
@@ -109,33 +114,34 @@
             <span style="font-weight: 800; font-size: 1.3rem; letter-spacing: 1px;">ELEVATION PILLAR</span>
         </a>
         <nav class="nav-links">
-            <a href="https://petermusau.co.ke">PORTFOLIO</a>
-            <a href="#login" style="border: 1px solid var(--gold); padding: 5px 15px; border-radius: 5px;">SIGN IN</a>
+            <a href="#signin">SIGN IN</a>
+            <a href="#signup" class="signup-btn">SIGN UP</a>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>Striving for the Peak</h1>
-        <p>Expert Science & Mathematics Tutoring | National Standard Exam Predictions</p>
-        <a href="#library" class="cta-main">ACCESS DIGITAL LIBRARY</a>
+        <h1>Elevation Pillar</h1>
+        <div class="motto-text">Striving for the Peak of Potential</div>
+        <p>Specialized Science & Mathematics Assessments for KPSEA, KJSEA, and KCSE</p>
+        <a href="#services" class="cta-main">EXPLORE ACADEMY</a>
     </section>
 
-    <h2 class="section-title">Academic Services</h2>
-    <div class="grid" id="library">
+    <h2 class="section-title" id="services">Academic Services</h2>
+    <div class="grid">
         <div class="card">
             <i class="fas fa-file-invoice"></i>
-            <h3>KCSE Predictions</h3>
-            <p>Professionally formatted LaTeX papers (Questions 1-50) following the latest KNEC standards.</p>
+            <h3>KPSEA & KJSEA</h3>
+            <p>National-standard prediction papers (Questions 1-50) professionally formatted in LaTeX for junior school success.</p>
         </div>
         <div class="card">
             <i class="fas fa-microscope"></i>
-            <h3>Science Mastery</h3>
-            <p>In-depth Physics and Chemistry resources designed to simplify complex concepts.</p>
+            <h3>Science & Math</h3>
+            <p>Expertly crafted resources for secondary exams, designed to simplify complex concepts and elevate grades.</p>
         </div>
         <div class="card">
             <i class="fas fa-music"></i>
             <h3>Ministry & Arts</h3>
-            <p>Spiritual growth and musical expression integrated into our educational mission.</p>
+            <p>Integrating spiritual mentorship and musical expression into our global educational mission.</p>
         </div>
     </div>
 
@@ -147,10 +153,13 @@
         <div class="social-icons">
             <a href="https://www.facebook.com/profile.php?id=61582117877169" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://youtube.com/@petermutua3996" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="mailto:pm6482545@gmail.com"><i class="fas fa-envelope"></i></a>
             <a href="https://petermusau.co.ke" target="_blank"><i class="fas fa-globe"></i></a>
         </div>
+        
+        <a href="mailto:pm6482545@gmail.com" class="footer-email">pm6482545@gmail.com</a>
+        
         <p>Elevation Pillar Academy | Mombasa, Kenya</p>
+        <p style="color: var(--gold); font-style: italic; margin-top: 10px;">"Striving for the Peak of Potential"</p>
         <div class="footer-info">
             &copy; 2026 Elevation Pillar. Built for Global Excellence.
         </div>
