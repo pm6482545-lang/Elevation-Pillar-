@@ -174,5 +174,18 @@
         function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
         function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
     </script>
+    <script>
+    // Check if user is logged in
+    const userName = localStorage.getItem('pillarUser');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    if (isLoggedIn === 'true' && userName) {
+        // Change the Welcome Text
+        document.querySelector('.welcome-banner h1').innerText = "Welcome, " + userName;
+        // Hide the sign-up promo in the sidebar
+        document.querySelector('.sidebar-promo').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
