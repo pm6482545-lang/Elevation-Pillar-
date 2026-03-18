@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Elevation Pillar Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --cobalt: #002366; --gold: #D4AF37; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; border-top: 5px solid var(--gold); }
+        .auth-card h2 { color: var(--cobalt); margin-bottom: 10px; }
+        .auth-card p { color: #666; font-size: 0.9rem; margin-bottom: 25px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-auth { width: 100%; padding: 14px; background: var(--cobalt); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-auth:hover { background: #001a4d; }
+        .switch-link { margin-top: 20px; font-size: 0.85rem; }
+        .switch-link a { color: var(--gold); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <img src="logo.png" style="width: 60px; margin-bottom: 10px;" alt="Logo">
+        <h2>Join the Academy</h2>
+        <p>Sign up for free to access premium prediction papers.</p>
+        
+        <form id="signupForm">
+            <input type="text" id="userName" placeholder="Full Name" required>
+            <input type="email" id="userEmail" placeholder="Email Address" required>
+            <input type="password" placeholder="Create Password" required>
+            <button type="submit" class="btn-auth">CREATE FREE ACCOUNT</button>
+        </form>
+
+        <div class="switch-link">
+            Already a member? <a href="signin.html">Sign In here</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('userName').value;
+            // Save to browser memory
+            localStorage.setItem('pillarUser', name);
+            localStorage.setItem('isLoggedIn', 'true');
+            alert('Welcome ' + name + '! Redirecting to your dashboard...');
+            window.location.href = 'portal.html';
+        });
+    </script>
+
+</body>
+</html>
