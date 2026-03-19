@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Elevation Pillar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/intasend-inlinejs-sdk@3.0.4/build/intasend-inline.js"></script>
+    <style>
+        :root { --cobalt: #002366; --gold: #D4AF37; --success: #27ae60; --light: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        
+        .checkout-card { background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-top: 6px solid var(--gold); text-align: center; }
+        .mpesa-header { background: #fdfaf0; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #eee; }
+        
+        .file-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px dashed var(--cobalt); }
+        .file-name { font-weight: 800; color: var(--cobalt); display: block; margin-top: 5px; }
+
+        .btn-pay { background: var(--success); color: white; width: 100%; padding: 18px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 1rem; transition: 0.3s; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); }
+        .btn-pay:hover { transform: translateY(-2px); background: #219150; }
+
+        #status-msg { display: none; margin-top: 15px; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
+        .status-loading { background: #fff3cd; color: #856404; }
+        .status-success { background: #d4edda; color: #155724; }
+
+        .btn-download-active { background: var(--cobalt); color: var(--gold); text-decoration: none; display: block; padding: 18px; border-radius: 8px; font-weight: 800; margin-top: 15px; animation: glow 1.5s infinite; }
+        @keyframes glow { 0% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 20px var(--gold); } 100% { box-shadow: 0 0 5px var(--gold); } }
+    </style>
+</head>
+<body>
+
+<div class="checkout-card">
+    <div class="mpesa-header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" style="width: 100px;">
+        <p style="margin: 5px 0 0; font-size: 0.85rem; color: #666;">Official Merchant: <strong>Peter Mutua</strong></p>
+        <p style="margin: 2px 0 0; font-size: 0.8rem; font-weight: bold;">0746 357 349</p>
+    </div>
+
+    <div class="file-box">
+        <small style="text-transform: uppercase; color: #555;">Document to Unlock:</small>
+        <span id="display-name" class="file-name">Loading file...</span>
+        <div style="margin-top: 10px; font-weight: bold; color: var(--success);">Ksh 100.00</div>
+    </div>
+
+    <div id="payment-area">
+        <button id="pay-btn" class="btn-pay">
+            <i class="fas fa-unlock-alt"></i> PAY & ACTIVATE DOWNLOAD
+        </button>
+        <div id="status-msg"></div>
+    </div>
+
+    <div id="download-area" style="display: none;">
+        <div class="status-success" style="padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <i class="fas fa-check-circle"></i> Payment Verified!
+        </div>
+        <a id="active-download-link" href="#" class="btn-download-active" download>
+            <i class="fas fa-cloud-download-alt"></i> DOWNLOAD NOW
+        </a>
+    </div>
+
+    <p style="margin-top: 25px; font-size: 0.8rem; color: #888;">
+        Need help? <a id="wa-help" href="#" style="color: var(--gold); font-weight: bold; text-decoration: none;">Contact Peter on WhatsApp</a>
+    </p>
+</div>
+
+<script>
+    // 1. Setup URL Parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileName = urlParams.get('file') || "Document";
+    const folder = urlParams.get('folder') || "PRO";
+    const myPhone = "254746357349";
+
+    document.getElementById('display-name').innerText = fileName.replace('.pdf', '');
+    document.getElementById('wa-help').href = `https://wa.me/${myPhone}?text=Help with payment for ${fileName}`;
+
+    // 2. Initialize IntaSend
+    // Replace 'IS_PUB_TEST...' with your actual Public Key from Intasend.com
+    const intasend = new window.IntaSend({
+        public_key: "IS_PUB_TEST_YOUR_KEY_HERE", 
+        live: false // Change to true for real M-Pesa transactions
+    });
+
+    // 3. Payment Logic
+    document.getElementById("pay-btn").onclick = () => {
+        const status = document.getElementById("status-msg");
+        
+        intasend.buttons.show({
+            amount: 100,
+            currency: "KES",
+            label: `Pay for ${fileName}`,
+            phone_number: "" // Optional: you can pre-fill or let user enter
+        })
+        .on("IN-PROGRESS", () => {
+            status.style.display = "block";
+            status.className = "status-loading";
+            status.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Checking PIN prompt on your phone...`;
+        })
+        .on("COMPLETE", (response) => {
+            // HIDE PAYMENT UI
+            document.getElementById("payment-area").style.display = "none";
+            
+            // SHOW DOWNLOAD UI
+            document.getElementById("download-area").style.display = "block";
+            
+            // CONSTRUCT THE REAL PATH
+            const downloadPath = `documents/${folder}/${fileName}`;
+            document.getElementById("active-download-link").href = downloadPath;
+
+            // Optional: Auto-start download
+            setTimeout(() => { window.location.href = downloadPath; }, 1500);
+        })
+        .on("FAILED", (response) => {
+            status.className = "status-loading"; // Using loading style for error box
+            status.style.background = "#f8d7da";
+            status.style.color = "#721c24";
+            status.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Payment failed. Please try again.`;
+        });
+    };
+</script>
+
+</body>
+</html>
