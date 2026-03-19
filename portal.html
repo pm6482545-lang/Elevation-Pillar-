@@ -64,7 +64,7 @@
         .nav-card:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .nav-card i { font-size: 1.8rem; color: var(--cobalt); background: var(--sky-blue); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
 
-        /* GLOBAL FOOTER (Remains same on all pages) */
+        /* GLOBAL FOOTER */
         footer { background: var(--cobalt); color: white; padding: 40px 5% 20px; text-align: center; margin-top: auto; border-top: 4px solid var(--gold); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
         .footer-col h4 { color: var(--gold); margin-bottom: 15px; text-transform: uppercase; font-size: 0.9rem; }
@@ -175,14 +175,11 @@
         function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
     </script>
     <script>
-    // Check if user is logged in
     const userName = localStorage.getItem('pillarUser');
     const isLoggedIn = localStorage.getItem('isLoggedIn');
 
     if (isLoggedIn === 'true' && userName) {
-        // Change the Welcome Text
         document.querySelector('.welcome-banner h1').innerText = "Welcome, " + userName;
-        // Hide the sign-up promo in the sidebar
         document.querySelector('.sidebar-promo').style.display = 'none';
     }
 </script>
