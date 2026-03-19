@@ -3,142 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Elevation Pillar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Main Portal | Elevation Pillar Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #1a2a6c; /* Deep Trust Blue */
-            --accent: #b21f1f; /* Stability Red */
-            --text: #333;
-            --light: #f4f7f6;
+        :root { 
+            --cobalt: #002366; 
+            --gold: #D4AF37; 
+            --sky-blue: #e3f2fd;
+            --white: #ffffff; 
+            --text-dark: #2c3e50;
         }
+        
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f8f9fa; color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            color: var(--text);
-            background-color: #fff;
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 3000;
+            top: 0;
+            left: 0;
+            background-color: var(--cobalt);
+            overflow-x: hidden;
+            transition: 0.4s;
+            padding-top: 60px;
         }
+        .sidebar a { padding: 15px 25px; text-decoration: none; font-size: 1.1rem; color: var(--white); display: block; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar a i { margin-right: 15px; color: var(--gold); width: 25px; text-align: center; }
+        .sidebar a:hover { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
+        .sidebar .closebtn { position: absolute; top: 10px; right: 20px; font-size: 36px; color: var(--gold); }
 
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
+        /* SIGN UP PROMO IN SIDEBAR */
+        .sidebar-promo { background: var(--gold); margin: 20px; padding: 15px; border-radius: 8px; color: var(--cobalt); text-align: center; }
+        .sidebar-promo h4 { margin: 0 0 10px; font-size: 0.9rem; }
+        .sidebar-promo a { background: var(--cobalt); color: white; padding: 8px; border-radius: 5px; font-size: 0.8rem; border: none; text-transform: uppercase; }
 
-        h1, h2 {
-            font-family: 'Playfair Display', serif;
+        /* TOP NAVIGATION */
+        header { 
+            background: var(--white); 
+            padding: 12px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 2000;
         }
+        .menu-trigger { font-size: 1.2rem; color: var(--cobalt); cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .portal-logo { display: flex; align-items: center; gap: 8px; font-weight: 900; color: var(--cobalt); text-decoration: none; }
+        .portal-logo img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
 
-        .container {
-            padding: 2rem;
-            max-width: 800px;
-            margin: auto;
-        }
+        /* MAIN CONTENT AREA */
+        main { flex: 1; }
+        .welcome-banner { background: var(--cobalt); color: white; padding: 40px 5%; }
+        .welcome-banner h1 { margin: 0; font-size: 1.8rem; color: var(--gold); }
+        
+        /* DASHBOARD GRID */
+        .dashboard-grid { padding: 25px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .nav-card { background: white; border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; border: 1px solid #edf2f7; transition: 0.3s; }
+        .nav-card:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .nav-card i { font-size: 1.8rem; color: var(--cobalt); background: var(--sky-blue); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
 
-        .pillar-card {
-            border-left: 4px solid var(--accent);
-            background: var(--light);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 8px 8px 0;
-        }
+        /* GLOBAL FOOTER */
+        footer { background: var(--cobalt); color: white; padding: 40px 5% 20px; text-align: center; margin-top: auto; border-top: 4px solid var(--gold); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
+        .footer-col h4 { color: var(--gold); margin-bottom: 15px; text-transform: uppercase; font-size: 0.9rem; }
+        .footer-col p, .footer-col a { color: #ccc; text-decoration: none; font-size: 0.85rem; line-height: 1.8; display: block; }
+        .footer-col a:hover { color: var(--gold); }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.75rem; color: #888; margin-top: 20px; }
 
-        .services-grid {
-            display: grid;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .service-item {
-            border: 1px solid #ddd;
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .contact-section {
-            background: #222;
-            color: white;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-radius: 12px;
-        }
-
-        .social-links a {
-            display: block;
-            color: #4da3ff;
-            text-decoration: none;
-            margin: 10px 0;
-            font-weight: bold;
-        }
-
-        .btn-back {
-            display: inline-block;
-            margin-top: 1rem;
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
-            color: #777;
-        }
+        .signup-footer-btn { background: var(--gold); color: var(--cobalt) !important; padding: 10px 20px; border-radius: 5px; font-weight: bold; display: inline-block !important; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="btn-back">← Back to Home</a>
-    <h1>About Elevation Pillar</h1>
-    <p>Scaling Heights, Sustaining Growth</p>
-</header>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        
+        <div class="sidebar-promo">
+            <h4>Unlock Premium Papers</h4>
+            <a href="signup.html">Sign Up for Free</a>
+        </div>
 
-<div class="container">
-    <h2>The Philosophy</h2>
-    <p>At Elevation Pillar, we believe success isn't just about reaching the top; it's about building the structural integrity that keeps you there. We provide the foundation for academic excellence and digital authority.</p>
-
-    <div class="pillar-card">
-        <h3>The Three Pillars</h3>
-        <ul>
-            <li><strong>Integrity:</strong> Radical transparency in every strategy.</li>
-            <li><strong>Perspective:</strong> Identifying obstacles before they become roadblocks.</li>
-            <li><strong>Resilience:</strong> Solutions built for longevity, not just the season.</li>
-        </ul>
+        <a href="index.html"><i class="fas fa-home"></i> Exit to Gate</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Learning Resources</a>
+        <a href="exams.html"><i class="fas fa-file-signature"></i> Termly Exams</a>
+        <a href="predictions.html"><i class="fas fa-bolt"></i> Elevate Kenya Predictions</a>
+        <a href="topical.html"><i class="fas fa-list-ul"></i> Topical Revision</a>
+        <a href="https://youtube.com/@petermutua3996?si=-uGNqFr2Yn_vUFy4" target="_blank"><i class="fas fa-play-circle"></i> Video Library</a>
+        <a href="https://wa.me/254746357349" target="_blank"><i class="fas fa-headset"></i> Support</a>
     </div>
 
-    <h2>Our Expert Services</h2>
-    <div class="services-grid">
-        <div class="service-item">
-            <h3>Academic Mentorship</h3>
-            <p>Professional document preparation and tutoring using precise LaTeX formatting for national-standard clarity.</p>
+    <header>
+        <div class="menu-trigger" onclick="openNav()">
+            <i class="fas fa-bars"></i> <span>MENU</span>
         </div>
-        <div class="service-item">
-            <h3>Full-Stack Digital Presence</h3>
-            <p>Mobile-first web development, SEO management, and PWA transitions for a discoverable brand.</p>
-        </div>
-    </div>
+        <a href="index.html" class="portal-logo">
+            <img src="logo.png" alt="EP">
+            <span>ELEVATION PILLAR</span>
+        </a>
+    </header>
 
-    <div class="contact-section">
-        <h2>Connect With Peter</h2>
-        <p>Direct inquiries and professional consultations:</p>
-        <div class="social-links">
-            <a href="https://petermusau.co.ke" target="_blank">🌐 Official Website: petermusau.co.ke</a>
-            <a href="https://wa.me/YOUR_PHONE_NUMBER">💬 WhatsApp: Chat for Inquiries</a>
-            <a href="#">📺 YouTube: Elevation Pillar Tutorials</a>
-            <a href="#">📘 Facebook: Community Updates</a>
-        </div>
-    </div>
-</div>
+    <main>
+        <section class="welcome-banner">
+            <h1>Elevation Dashboard</h1>
+            <p>"Striving for the Peak of Potential"</p>
+        </section>
 
-<footer>
-    <p>&copy; 2026 Elevation Pillar | Status: 💻 Coding | 📚 Tutoring | 🎸 Composing</p>
-</footer>
+        <div class="dashboard-grid">
+            <a href="about.html" class="nav-card">
+                <i class="fas fa-university"></i>
+                <div><h3>About Us</h3><p>Our vision for Global Excellence.</p></div>
+            </a>
+            <a href="resources.html" class="nav-card">
+                <i class="fas fa-book"></i>
+                <div><h3>Learning Resources</h3><p>Notes and CBC Materials.</p></div>
+            </a>
+            <a href="exams.html" class="nav-card">
+                <i class="fas fa-pen-nib"></i>
+                <div><h3>Termly Exams</h3><p>Opening & Closing Papers.</p></div>
+            </a>
+            <a href="predictions.html" class="nav-card">
+                <i class="fas fa-bullseye"></i>
+                <div><h3>Elevate Kenya</h3><p>1-50 Prediction Papers.</p></div>
+            </a>
+            <a href="topical.html" class="nav-card">
+                <i class="fas fa-microscope"></i>
+                <div><h3>Topical Revision</h3><p>Focused Math & Science sets.</p></div>
+            </a>
+            <a href="https://youtube.com/@petermutua3996?si=-uGNqFr2Yn_vUFy4" target="_blank" class="nav-card">
+                <i class="fas fa-video"></i>
+                <div><h3>Video Classes</h3><p>Watch and Learn on YouTube.</p></div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Academy</h4>
+                <a href="about.html">Our Mission</a>
+                <a href="ministry.html">Ministry & Music</a>
+                <a href="gallery.html">Campus Gallery</a>
+            </div>
+            <div class="footer-col">
+                <h4>Social Presence</h4>
+                <a href="https://youtube.com/@petermutua3996?si=-uGNqFr2Yn_vUFy4" target="_blank">YouTube Channel</a>
+                <a href="https://www.facebook.com/profile.php?id=61582117877169" target="_blank">Facebook Page</a>
+                <a href="https://wa.me/254746357349" target="_blank">WhatsApp Support</a>
+            </div>
+            <div class="footer-col">
+                <h4>Join Us</h4>
+                <p>Register to track your scores and download premium papers.</p>
+                <a href="signup.html" class="signup-footer-btn">SIGN UP FOR FREE</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Mombasa, Kenya</p>
+                <p>pm6482545@gmail.com</p>
+                <p>+254 746 357 349</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Elevation Pillar Academy. Striving for the Peak of Potential.
+        </div>
+    </footer>
+
+    <script>
+        function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+    </script>
+    <script>
+    const userName = localStorage.getItem('pillarUser');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    if (isLoggedIn === 'true' && userName) {
+        document.querySelector('.welcome-banner h1').innerText = "Welcome, " + userName;
+        document.querySelector('.sidebar-promo').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>
