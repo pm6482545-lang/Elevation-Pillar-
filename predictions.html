@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictions & Exams | Elevation Pillar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+            --cobalt: #002366; 
+            --gold: #D4AF37; 
+            --sky-blue: #e3f2fd;
+            --white: #ffffff; 
+            --text-dark: #2c3e50;
+        }
+        
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f8f9fa; color: var(--text-dark); }
+
+        header { 
+            background: var(--cobalt); 
+            color: white; 
+            padding: 30px 5%; 
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 5%; }
+
+        h2 { color: var(--cobalt); text-align: center; text-transform: uppercase; margin-bottom: 25px; border-bottom: 2px solid var(--gold); display: inline-block; width: 100%; padding-bottom: 10px; }
+
+        /* PREDICTION BUTTONS */
+        .prediction-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px; }
+        
+        .btn-elevate {
+            background: var(--cobalt);
+            color: var(--gold);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.2rem;
+            border: 2px solid var(--gold);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-elevate:hover { background: var(--gold); color: var(--cobalt); transform: translateY(-5px); }
+        .btn-elevate i { font-size: 2.5rem; }
+
+        /* TERMLY EXAMS GRID */
+        .exam-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        
+        .btn-grade {
+            background: white;
+            color: var(--cobalt);
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-grade:hover { border-color: var(--gold); background: var(--sky-blue); color: var(--cobalt); }
+
+        footer { background: var(--cobalt); color: white; padding: 20px; text-align: center; margin-top: 50px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="portal.html" style="color:white; text-decoration:none; font-size:0.9rem;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    <h1>Elevation Assessment Center</h1>
+    <p>Premium 1-50 Prediction Papers & Termly Exams</p>
+</header>
+
+<div class="container">
+    
+    <h2>Elevate Prediction Papers</h2>
+    <div class="prediction-box">
+        <a href="#" class="btn-elevate" onclick="viewFolder('KPSEA_Predictions')">
+            <i class="fas fa-graduation-cap"></i>
+            KPSEA ELEVATE PREDICTIONS
+        </a>
+        <a href="#" class="btn-elevate" onclick="viewFolder('KJSEA_Predictions')">
+            <i class="fas fa-award"></i>
+            KJSEA ELEVATE PREDICTIONS
+        </a>
+        <a href="#" class="btn-elevate" onclick="viewFolder('KCSE_Predictions')">
+            <i class="fas fa-certificate"></i>
+            KCSE ELEVATE PREDICTIONS
+        </a>
+    </div>
+
+    <h2>Download Termly Exams</h2>
+    <div class="exam-grid">
+        <a href="#" class="btn-grade" onclick="viewFolder('PP1')">PP1 Exams</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('PP2')">PP2 Exams</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade1')">Grade 1</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade2')">Grade 2</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade3')">Grade 3</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade4')">Grade 4</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade5')">Grade 5</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade6')">Grade 6</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade7')">Grade 7</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade8')">Grade 8</a>
+        <a href="#" class="btn-grade" onclick="viewFolder('Grade9')">Grade 9</a>
+    </div>
+
+</div>
+
+<footer>
+    &copy; 2026 Elevation Pillar Academy. Striving for the Peak of Potential.
+</footer>
+
+<script>
+    /**
+     * Function to redirect to view-folder.html
+     * @param {string} folderName - The name of the subfolder inside /documents/
+     */
+    function viewFolder(folderName) {
+        // This passes the folder name as a URL parameter
+        window.location.href = 'view-folder.html?folder=' + folderName;
+    }
+</script>
+
+</body>
+</html>
