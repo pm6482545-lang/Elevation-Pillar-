@@ -21,7 +21,7 @@
         .btn-unlock { background: var(--cobalt); color: var(--gold); border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
         
         #download-area { display: none; margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 10px; border: 2px solid var(--success); }
-        .btn-final { background: var(--success); color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; }
+        .btn-final { background: var(--success); color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -29,14 +29,14 @@
 <div class="card">
     <div class="mpesa-header">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" style="width: 80px;">
-        <p style="margin: 5px 0; font-weight: bold;">0746 357 349</p>
-        <p style="margin: 0; font-size: 0.85rem; color: #666;">Account: Peter Mutua</p>
+        <p style="margin: 5px 0; font-weight: bold; font-size: 1.2rem;">0746 357 349</p>
+        <p style="margin: 0; font-size: 0.85rem; color: #666;">Name: <strong>PETER MUTUA</strong></p>
     </div>
 
     <div class="file-box">
-        <small style="color: #666;">Item to Unlock:</small>
-        <div id="file-name" style="font-weight: 800; color: var(--cobalt);">Loading...</div>
-        <div style="font-weight: bold; color: var(--success); margin-top: 5px;">Ksh 100</div>
+        <small style="color: #666; text-transform: uppercase;">Unlocking Resource:</small>
+        <div id="file-name" style="font-weight: 800; color: var(--cobalt); margin: 5px 0;">Loading...</div>
+        <div style="font-weight: bold; color: var(--success); font-size: 1.1rem;">Ksh 50.00</div>
     </div>
 
     <a id="whatsapp-link" href="#" class="btn-wa" target="_blank">
@@ -44,42 +44,56 @@
     </a>
 
     <div class="input-group">
-        <label style="display:block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold;">Enter Verification Code:</label>
-        <input type="text" id="unlock-input" placeholder="Enter 4-digit code">
+        <label style="display:block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; color: var(--cobalt);">Enter 4-Digit Unlock Code:</label>
+        <input type="text" id="unlock-input" placeholder="0000" maxlength="10">
     </div>
 
-    <button class="btn-unlock" onclick="checkCode()">Verify & Unlock</button>
+    <button class="btn-unlock" onclick="checkCode()">Verify & Download</button>
 
     <div id="download-area">
         <i class="fas fa-check-circle fa-2x" style="color: var(--success);"></i>
-        <h3>Verified!</h3>
-        <a id="final-link" href="#" class="btn-final" download>DOWNLOAD PDF</a>
+        <h3>Payment Verified!</h3>
+        <p style="font-size: 0.85rem; color: #555;">Click the button below to save your file.</p>
+        <a id="final-link" href="#" class="btn-final" download>Download Now</a>
     </div>
 </div>
 
 <script>
+    // 1. Get File Info from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const fileName = urlParams.get('file');
-    const folder = urlParams.get('folder');
+    const fileName = urlParams.get('file') || "Document.pdf";
+    const folder = urlParams.get('folder') || "PRO";
     const myPhone = "254746357349";
 
-    document.getElementById('file-name').innerText = fileName.replace('.pdf', '');
-    document.getElementById('whatsapp-link').href = `https://wa.me/${myPhone}?text=Hello Mr. Peter, I have paid Ksh 100 for ${fileName}. Please send my unlock code.`;
+    // 2. Display the name nicely
+    document.getElementById('file-name').innerText = fileName.replace('.pdf', '').replace(/_/g, ' ');
+    
+    // 3. Setup WhatsApp link with the NEW PRICE
+    document.getElementById('whatsapp-link').href = `https://wa.me/${myPhone}?text=Hello Mr. Peter, I have paid Ksh 50 for ${fileName}. Please send my unlock code.`;
 
+    // 4. Verification Logic
     function checkCode() {
         const input = document.getElementById('unlock-input').value.trim();
         
-        // --- YOU CAN CHANGE THIS CODE ANYTIME ---
+        // --- YOUR CURRENT ACTIVE CODE ---
         const correctCode = "2026"; 
 
         if (input === correctCode) {
             document.getElementById('download-area').style.display = 'block';
-            document.getElementById('final-link').href = `documents/${folder}/${fileName}`;
-            // Hide the input fields
+            
+            // Construct the path: /documents/FOLDER/FILE.pdf
+            const downloadPath = `documents/${folder}/${fileName}`;
+            document.getElementById('final-link').href = downloadPath;
+            
+            // Hide payment inputs
             document.querySelector('.input-group').style.display = 'none';
             document.querySelector('.btn-unlock').style.display = 'none';
+            document.getElementById('whatsapp-link').style.display = 'none';
+            
+            // Smoothly scroll to the download button
+            document.getElementById('download-area').scrollIntoView({ behavior: 'smooth' });
         } else {
-            alert("Incorrect code. Please check with Mr. Peter on WhatsApp.");
+            alert("Incorrect code. Please ensure you have paid and received the correct code from Mr. Peter on WhatsApp.");
         }
     }
 </script>
