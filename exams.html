@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termly Exams | Elevation Pillar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #002366; --gold: #D4AF37; --light: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: var(--primary); }
+        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 30px; }
+        .grade-card { 
+            background: white; padding: 25px 10px; border-radius: 10px; text-align: center; 
+            text-decoration: none; color: var(--primary); font-weight: 800; border-bottom: 4px solid #ddd;
+            transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .grade-card i { font-size: 2rem; color: var(--gold); }
+        .grade-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .free-badge { background: #27ae60; color: white; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; }
+        .back-link { color: white; text-decoration: none; font-size: 0.9rem; border: 1px solid white; padding: 5px 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="portal.html" class="back-link">← BACK TO PORTAL</a>
+    <h1 style="margin-top:20px;">TERMLY ASSESSMENT ARCHIVES</h1>
+    <p>Access high-quality exam papers for all levels</p>
+</header>
+
+<div class="container">
+    <div class="grid">
+        <a href="view-folder.html?folder=PP1" class="grade-card"><i class="fas fa-child"></i>PP1 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=PP2" class="grade-card"><i class="fas fa-child"></i>PP2 <span class="free-badge">Free</span></a>
+        
+        <a href="view-folder.html?folder=G1" class="grade-card"><i class="fas fa-pencil-alt"></i>GRADE 1 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=G2" class="grade-card"><i class="fas fa-pencil-alt"></i>GRADE 2 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=G3" class="grade-card"><i class="fas fa-pencil-alt"></i>GRADE 3 <span class="free-badge">Free</span></a>
+        
+        <a href="view-folder.html?folder=G4" class="grade-card"><i class="fas fa-book"></i>GRADE 4 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=G5" class="grade-card"><i class="fas fa-book"></i>GRADE 5 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=G6" class="grade-card"><i class="fas fa-book"></i>GRADE 6 <span class="free-badge">Free</span></a>
+        
+        <a href="view-folder.html?folder=G7" class="grade-card"><i class="fas fa-microscope"></i>GRADE 7 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=G8" class="grade-card"><i class="fas fa-microscope"></i>GRADE 8 <span class="free-badge">Free</span></a>
+        <a href="view-folder.html?folder=G9" class="grade-card"><i class="fas fa-microscope"></i>GRADE 9 <span class="free-badge">Free</span></a>
+    </div>
+</div>
+
+</body>
+</html>
