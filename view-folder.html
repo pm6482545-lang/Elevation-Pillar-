@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Archives | Elevation Pillar</title>
+    <title>Archives | Elevation Pillar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #002366; --gold: #D4AF37; --secondary: #27ae60; --light: #f8f9fa; }
@@ -17,26 +17,27 @@
 
         .file-list { display: grid; gap: 12px; }
         .file-card { background: white; padding: 15px 20px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .file-name { font-weight: 700; color: #2c3e50; flex: 1; }
+        .file-name { font-weight: 700; color: #2c3e50; flex: 1; margin-right: 10px; }
         
-        .btn { padding: 10px 18px; border-radius: 4px; font-weight: bold; text-decoration: none; font-size: 0.85rem; cursor: pointer; border: none; transition: 0.3s; }
+        .btn { padding: 10px 18px; border-radius: 4px; font-weight: bold; text-decoration: none; font-size: 0.85rem; cursor: pointer; border: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
         .btn-download { background: var(--secondary); color: white; }
         .btn-pay { background: var(--gold); color: var(--primary); }
         .btn:hover { opacity: 0.9; transform: scale(1.02); }
         
         .loading { text-align: center; padding: 50px; color: #95a5a6; font-style: italic; }
+        .free-tag { font-size: 0.65rem; background: #e8f5e9; color: #2e7d32; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 5px; }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="portal.html" class="back-link">← RETURN TO DASHBOARD</a>
-    <h1 id="folder-title">SCANNING ARCHIVES...</h1>
+    <a href="javascript:history.back()" class="back-link">← GO BACK</a>
+    <h1 id="folder-title">OPENING ARCHIVES...</h1>
 </header>
 
 <div class="container">
     <div id="file-container" class="file-list">
-        <div class="loading">Connecting to GitHub Archives...</div>
+        <div class="loading">Fetching resources from GitHub...</div>
     </div>
 </div>
 
@@ -44,36 +45,33 @@
     const urlParams = new URLSearchParams(window.location.search);
     const folderName = urlParams.get('folder'); 
     
-    // UPDATED: These match your GitHub screenshot exactly
     const githubUser = "pm6482545-lang";
     const githubRepo = "Elevation-Pillar-"; 
     
+    // Only these folders require Ksh 50 payment
     const premiumFolders = ['KCSE', 'KJSEA', 'KPSEA', 'PRO'];
 
     async function fetchFiles() {
         if (!folderName) {
-            document.getElementById('folder-title').innerText = "FOLDER NOT SPECIFIED";
-            document.getElementById('file-container').innerHTML = '<div class="loading">Please select a valid folder from the dashboard.</div>';
+            document.getElementById('folder-title').innerText = "ERROR";
+            document.getElementById('file-container').innerHTML = '<div class="loading">No grade/folder selected.</div>';
             return;
         }
         
-        document.getElementById('folder-title').innerText = folderName + " Archives";
+        document.getElementById('folder-title').innerText = folderName + " Resources";
         const container = document.getElementById('file-container');
 
         try {
-            // Updated Path: /documents/folderName
             const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/documents/${folderName}`;
-            
             const response = await fetch(apiUrl);
             
             if (!response.ok) {
-                throw new Error(`Folder "${folderName}" not found or API limit reached.`);
+                throw new Error("Folder not found in repository.");
             }
 
             const files = await response.json();
             container.innerHTML = ''; 
             
-            // Filter only PDF files
             const pdfFiles = files.filter(f => f.name.toLowerCase().endsWith('.pdf'));
 
             if (pdfFiles.length === 0) {
@@ -82,6 +80,7 @@
             }
 
             pdfFiles.forEach(file => {
+                // Determine if this specific folder is premium
                 const isPremium = premiumFolders.includes(folderName.toUpperCase());
                 const card = document.createElement('div');
                 card.className = 'file-card';
@@ -91,23 +90,23 @@
                 let actionBtn;
                 if (isPremium) {
                     const checkoutUrl = `checkout.html?folder=${folderName}&file=${encodeURIComponent(file.name)}`;
-                    actionBtn = `<a href="${checkoutUrl}" class="btn btn-pay">GET ACCESS (Ksh 50)</a>`;
+                    actionBtn = `<a href="${checkoutUrl}" class="btn btn-pay"><i class="fas fa-lock"></i> UNLOCK (Ksh 50)</a>`;
                 } else {
-                    actionBtn = `<a href="${file.download_url}" class="btn btn-download" target="_blank">VIEW / DOWNLOAD</a>`;
+                    actionBtn = `<a href="${file.download_url}" class="btn btn-download" target="_blank"><i class="fas fa-file-download"></i> FREE DOWNLOAD</a>`;
                 }
 
                 card.innerHTML = `
                     <span class="file-name">
                         <i class="fas fa-file-pdf" style="color:#e74c3c; margin-right:10px;"></i>
                         ${cleanName}
+                        ${!isPremium ? '<span class="free-tag">FREE</span>' : ''}
                     </span>
                     ${actionBtn}
                 `;
                 container.appendChild(card);
             });
         } catch (e) {
-            console.error(e);
-            container.innerHTML = `<div class="loading">Error: ${e.message}<br>Verify the folder name in your URL matches GitHub.</div>`;
+            container.innerHTML = `<div class="loading">Resources for <b>${folderName}</b> are currently being uploaded.<br>Please check back later!</div>`;
         }
     }
 
