@@ -13,7 +13,12 @@
         .back-btn { position: absolute; top: 15px; left: 15px; text-decoration: none; color: #999; font-size: 0.9rem; font-weight: bold; }
         .back-btn:hover { color: var(--cobalt); }
 
-        .mpesa-header { background: #fdfaf0; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 20px; margin-top: 10px; }
+        .steps-box { text-align: left; background: #fdfaf0; padding: 15px; border-radius: 10px; margin: 20px 0; border-left: 4px solid var(--gold); }
+        .steps-box p { margin: 0 0 8px 0; font-weight: bold; color: var(--cobalt); font-size: 0.85rem; text-transform: uppercase; }
+        .steps-list { margin: 0; padding: 0; list-style: none; font-size: 0.85rem; color: #444; }
+        .steps-list li { margin-bottom: 5px; display: flex; gap: 8px; }
+
+        .mpesa-header { background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 20px; }
         .file-box { background: #eef4ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--cobalt); }
         
         .input-group { margin: 20px 0; text-align: left; }
@@ -29,6 +34,8 @@
         #download-area { display: none; margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 10px; border: 2px solid var(--success); animation: slideUp 0.4s ease-out; }
         .btn-final { background: var(--success); color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 15px; text-transform: uppercase; }
 
+        .support-link { display: none; margin-top: 15px; font-size: 0.8rem; color: var(--danger); text-decoration: none; font-weight: bold; }
+
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -37,16 +44,26 @@
 <div class="card">
     <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> BACK</a>
     
+    <h2 style="color: var(--cobalt); margin-top: 25px; font-size: 1.3rem;">Unlock Your File</h2>
+
+    <div class="steps-box">
+        <p>Quick Steps:</p>
+        <ul class="steps-list">
+            <li><span>1.</span> <span><b>Pay Ksh 50</b> via M-Pesa to the number below.</span></li>
+            <li><span>2.</span> <span>Click <b>"Send Payment Proof"</b> for your code.</span></li>
+            <li><span>3.</span> <span><b>Enter code</b> below to download.</span></li>
+        </ul>
+    </div>
+
     <div class="mpesa-header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" style="width: 80px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" style="width: 70px;">
         <p style="margin: 5px 0; font-weight: bold; font-size: 1.2rem;">0746 357 349</p>
-        <p style="margin: 0; font-size: 0.85rem; color: #666;">Name: <strong>PETER MUTUA</strong></p>
+        <p style="margin: 0; font-size: 0.8rem; color: #666;">Name: <strong>PETER MUTUA</strong></p>
     </div>
 
     <div class="file-box">
-        <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Selected Resource:</small>
-        <div id="file-name-display" style="font-weight: 800; color: var(--cobalt); margin: 8px 0; font-size: 1.1rem;">Loading...</div>
-        <div style="font-weight: bold; color: var(--success); font-size: 1.2rem;">Ksh 50.00</div>
+        <div id="file-name-display" style="font-weight: 800; color: var(--cobalt); margin-bottom: 5px; font-size: 1rem;">Loading...</div>
+        <div style="font-weight: bold; color: var(--success); font-size: 1.1rem;">Ksh 50.00</div>
     </div>
 
     <a id="whatsapp-link" href="#" class="btn-wa" target="_blank">
@@ -54,63 +71,67 @@
     </a>
 
     <div class="input-group">
-        <label style="display:block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; color: var(--cobalt);">Enter 4-Digit Unlock Code:</label>
+        <label style="display:block; margin-bottom: 8px; font-size: 0.85rem; font-weight: bold; color: var(--cobalt);">Enter 4-Digit Unlock Code:</label>
         <input type="number" id="unlock-input" placeholder="XXXX" oninput="if(this.value.length > 4) this.value = this.value.slice(0, 4);">
     </div>
 
-    <button class="btn-unlock" onclick="checkCode()">Verify & Unlock File</button>
+    <button class="btn-unlock" onclick="checkCode()">Verify & Unlock PDF</button>
+    <a id="support-btn" href="#" class="support-link">Code not working? Chat with Mr. Peter</a>
 
     <div id="download-area">
         <i class="fas fa-check-circle fa-2x" style="color: var(--success);"></i>
-        <h3 style="margin: 10px 0;">Payment Verified!</h3>
-        <p style="font-size: 0.85rem; color: #555;">Your download link is ready below.</p>
+        <h3 style="margin: 10px 0;">Success!</h3>
+        <p style="font-size: 0.85rem; color: #555;">Download is now active.</p>
         <a id="final-link" href="#" class="btn-final" download target="_blank">Download Now</a>
     </div>
 </div>
 
 <script>
-    // 1. Get Parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
     const fileName = urlParams.get('file');
     const folder = urlParams.get('folder');
     const myPhone = "254746357349";
+    let errorCount = 0;
 
-    // 2. Setup Page content
-    if (fileName) {
-        document.getElementById('file-name-display').innerText = fileName.replace('.pdf', '').replace(/_/g, ' ');
+    // 1. Weekly Code Generator
+    function getWeeklyCode() {
+        const now = new Date();
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        const weekNumber = Math.ceil((((now - startOfYear) / 86400000) + startOfYear.getDay() + 1) / 7);
         
-        // Dynamic WhatsApp Message
-        const message = encodeURIComponent(`Hello Mr. Peter, I have paid Ksh 50 for the document: ${fileName} from the ${folder} folder. Please send my unlock code.`);
-        document.getElementById('whatsapp-link').href = `https://wa.me/${myPhone}?text=${message}`;
-    } else {
-        document.getElementById('file-name-display').innerText = "Resource Not Selected";
+        // This generates a unique code for every week of 2026
+        // Example: Week 12 = "1226", Week 13 = "1326"
+        return weekNumber.toString() + "26";
     }
 
-    // 3. Verification Logic
+    if (fileName) {
+        document.getElementById('file-name-display').innerText = fileName.replace('.pdf', '').replace(/_/g, ' ');
+        const msg = encodeURIComponent(`Hello Mr. Peter, I have paid Ksh 50 for ${fileName} (${folder}). Please send the code for this week.`);
+        document.getElementById('whatsapp-link').href = `https://wa.me/${myPhone}?text=${msg}`;
+        document.getElementById('support-btn').href = `https://wa.me/${myPhone}?text=Hi, my code is not working for ${fileName}.`;
+    }
+
     function checkCode() {
         const input = document.getElementById('unlock-input').value.trim();
-        
-        // MASTER CODE (Change this as needed)
-        const correctCode = "2026"; 
+        const correctCode = getWeeklyCode(); 
 
         if (input === correctCode) {
-            // Success State
             document.getElementById('download-area').style.display = 'block';
+            document.getElementById('final-link').href = `documents/${folder}/${fileName}`;
             
-            // Build the download path: /documents/folder/filename.pdf
-            // We use the full relative path so it finds it in your repo folders
-            const downloadPath = `documents/${folder}/${fileName}`;
-            document.getElementById('final-link').href = downloadPath;
-            
-            // UI Cleanup
-            document.querySelector('.input-group').style.display = 'none';
-            document.querySelector('.btn-unlock').style.display = 'none';
-            document.getElementById('whatsapp-link').style.display = 'none';
-            document.querySelector('.mpesa-header').style.opacity = '0.5';
-            
+            // Hide elements
+            ['.steps-box', '.input-group', '.btn-unlock', '#whatsapp-link', '.support-link'].forEach(el => {
+                const element = document.querySelector(el);
+                if(element) element.style.display = 'none';
+            });
+            document.querySelector('.mpesa-header').style.opacity = '0.4';
             document.getElementById('download-area').scrollIntoView({ behavior: 'smooth' });
         } else {
-            alert("❌ Access Denied: Please enter the correct code received from Mr. Peter.");
+            errorCount++;
+            alert("❌ Incorrect code for this week.");
+            if (errorCount >= 2) {
+                document.getElementById('support-btn').style.display = 'block';
+            }
         }
     }
 </script>
