@@ -12,6 +12,7 @@
             --sky-blue: #e3f2fd;
             --white: #ffffff; 
             --text-dark: #2c3e50;
+            --success: #27ae60;
         }
         
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f8f9fa; color: var(--text-dark); }
@@ -28,7 +29,7 @@
 
         h2 { color: var(--cobalt); text-align: center; text-transform: uppercase; margin-bottom: 25px; border-bottom: 2px solid var(--gold); display: inline-block; width: 100%; padding-bottom: 10px; }
 
-        /* PREDICTION BUTTONS */
+        /* PREDICTION BOXES */
         .prediction-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px; }
         
         .btn-elevate {
@@ -45,10 +46,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
         .btn-elevate:hover { background: var(--gold); color: var(--cobalt); transform: translateY(-5px); }
         .btn-elevate i { font-size: 2.5rem; }
+        .price-tag { background: var(--success); color: white; padding: 2px 12px; border-radius: 20px; font-size: 0.8rem; margin-top: 10px; border: 1px solid white; }
 
         /* TERMLY EXAMS GRID */
         .exam-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
@@ -72,60 +74,56 @@
 <body>
 
 <header>
-    <a href="portal.html" style="color:white; text-decoration:none; font-size:0.9rem;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    <div style="margin-bottom: 15px;">
+        <a href="portal.html" style="color:var(--gold); text-decoration:none; font-weight:bold; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 5px;">
+            <i class="fas fa-arrow-left"></i> BACK TO DASHBOARD
+        </a>
+    </div>
     <h1>Elevation Assessment Center</h1>
-    <p>Premium 1-50 Prediction Papers & Termly Exams</p>
+    <p>Premium Prediction Papers & Termly Revision Exams</p>
 </header>
 
 <div class="container">
     
     <h2>Elevate Prediction Papers</h2>
     <div class="prediction-box">
-        <a href="#" class="btn-elevate" onclick="viewFolder('KPSEA_Predictions')">
+        <a href="view-folder.html?folder=KPSEA" class="btn-elevate">
             <i class="fas fa-graduation-cap"></i>
-            KPSEA ELEVATE PREDICTIONS
+            KPSEA PREDICTIONS
+            <span class="price-tag">Ksh 50 PER SUBJECT</span>
         </a>
-        <a href="#" class="btn-elevate" onclick="viewFolder('KJSEA_Predictions')">
+        <a href="view-folder.html?folder=KJSEA" class="btn-elevate">
             <i class="fas fa-award"></i>
-            KJSEA ELEVATE PREDICTIONS
+            KJSEA PREDICTIONS
+            <span class="price-tag">Ksh 50 PER SUBJECT</span>
         </a>
-        <a href="#" class="btn-elevate" onclick="viewFolder('KCSE_Predictions')">
+        <a href="view-folder.html?folder=KCSE" class="btn-elevate">
             <i class="fas fa-certificate"></i>
-            KCSE ELEVATE PREDICTIONS
+            KCSE PREDICTIONS
+            <span class="price-tag">Ksh 50 PER SUBJECT</span>
         </a>
     </div>
 
     <h2>Download Termly Exams</h2>
     <div class="exam-grid">
-        <a href="#" class="btn-grade" onclick="viewFolder('PP1')">PP1 Exams</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('PP2')">PP2 Exams</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade1')">Grade 1</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade2')">Grade 2</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade3')">Grade 3</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade4')">Grade 4</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade5')">Grade 5</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade6')">Grade 6</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade7')">Grade 7</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade8')">Grade 8</a>
-        <a href="#" class="btn-grade" onclick="viewFolder('Grade9')">Grade 9</a>
+        <a href="view-folder.html?folder=PP1" class="btn-grade">PP1 Exams</a>
+        <a href="view-folder.html?folder=PP2" class="btn-grade">PP2 Exams</a>
+        <a href="view-folder.html?folder=G1" class="btn-grade">Grade 1</a>
+        <a href="view-folder.html?folder=G2" class="btn-grade">Grade 2</a>
+        <a href="view-folder.html?folder=G3" class="btn-grade">Grade 3</a>
+        <a href="view-folder.html?folder=G4" class="btn-grade">Grade 4</a>
+        <a href="view-folder.html?folder=G5" class="btn-grade">Grade 5</a>
+        <a href="view-folder.html?folder=G6" class="btn-grade">Grade 6</a>
+        <a href="view-folder.html?folder=G7" class="btn-grade">Grade 7</a>
+        <a href="view-folder.html?folder=G8" class="btn-grade">Grade 8</a>
+        <a href="view-folder.html?folder=G9" class="btn-grade">Grade 9</a>
     </div>
 
 </div>
 
 <footer>
-    &copy; 2026 Elevation Pillar Academy. Striving for the Peak of Potential.
+    &copy; 2026 Elevation Pillar Academy | Mombasa, Kenya
 </footer>
-
-<script>
-    /**
-     * Function to redirect to view-folder.html
-     * @param {string} folderName - The name of the subfolder inside /documents/
-     */
-    function viewFolder(folderName) {
-        // This passes the folder name as a URL parameter
-        window.location.href = 'view-folder.html?folder=' + folderName;
-    }
-</script>
 
 </body>
 </html>
