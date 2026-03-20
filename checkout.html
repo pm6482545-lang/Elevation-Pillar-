@@ -6,27 +6,37 @@
     <title>Unlock Resource | Elevation Pillar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --cobalt: #002366; --gold: #D4AF37; --success: #27ae60; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .card { background: white; width: 90%; max-width: 420px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 6px solid var(--gold); text-align: center; }
+        :root { --cobalt: #002366; --gold: #D4AF37; --success: #27ae60; --danger: #e74c3c; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .card { background: white; width: 100%; max-width: 420px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 6px solid var(--gold); text-align: center; position: relative; }
         
-        .mpesa-header { background: #fdfaf0; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 20px; }
+        .back-btn { position: absolute; top: 15px; left: 15px; text-decoration: none; color: #999; font-size: 0.9rem; font-weight: bold; }
+        .back-btn:hover { color: var(--cobalt); }
+
+        .mpesa-header { background: #fdfaf0; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 20px; margin-top: 10px; }
         .file-box { background: #eef4ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--cobalt); }
         
         .input-group { margin: 20px 0; text-align: left; }
-        input { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.1rem; text-align: center; box-sizing: border-box; }
-        input:focus { border-color: var(--gold); outline: none; }
+        input { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.1rem; text-align: center; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
 
-        .btn-wa { background: #25d366; color: white; text-decoration: none; display: block; padding: 15px; border-radius: 8px; font-weight: bold; margin-bottom: 10px; transition: 0.3s; }
-        .btn-unlock { background: var(--cobalt); color: var(--gold); border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+        .btn-wa { background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 8px; font-weight: bold; margin-bottom: 10px; transition: 0.3s; }
+        .btn-wa:hover { background: #1ebd57; transform: translateY(-2px); }
+
+        .btn-unlock { background: var(--cobalt); color: var(--gold); border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-unlock:hover { background: #001a4d; }
         
-        #download-area { display: none; margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 10px; border: 2px solid var(--success); }
-        .btn-final { background: var(--success); color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; text-transform: uppercase; }
+        #download-area { display: none; margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 10px; border: 2px solid var(--success); animation: slideUp 0.4s ease-out; }
+        .btn-final { background: var(--success); color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 15px; text-transform: uppercase; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="card">
+    <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> BACK</a>
+    
     <div class="mpesa-header">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" style="width: 80px;">
         <p style="margin: 5px 0; font-weight: bold; font-size: 1.2rem;">0746 357 349</p>
@@ -34,66 +44,73 @@
     </div>
 
     <div class="file-box">
-        <small style="color: #666; text-transform: uppercase;">Unlocking Resource:</small>
-        <div id="file-name" style="font-weight: 800; color: var(--cobalt); margin: 5px 0;">Loading...</div>
-        <div style="font-weight: bold; color: var(--success); font-size: 1.1rem;">Ksh 50.00</div>
+        <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Selected Resource:</small>
+        <div id="file-name-display" style="font-weight: 800; color: var(--cobalt); margin: 8px 0; font-size: 1.1rem;">Loading...</div>
+        <div style="font-weight: bold; color: var(--success); font-size: 1.2rem;">Ksh 50.00</div>
     </div>
 
     <a id="whatsapp-link" href="#" class="btn-wa" target="_blank">
-        <i class="fab fa-whatsapp"></i> I HAVE PAID (GET CODE)
+        <i class="fab fa-whatsapp"></i> SEND PAYMENT PROOF
     </a>
 
     <div class="input-group">
         <label style="display:block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; color: var(--cobalt);">Enter 4-Digit Unlock Code:</label>
-        <input type="text" id="unlock-input" placeholder="0000" maxlength="10">
+        <input type="number" id="unlock-input" placeholder="XXXX" oninput="if(this.value.length > 4) this.value = this.value.slice(0, 4);">
     </div>
 
-    <button class="btn-unlock" onclick="checkCode()">Verify & Download</button>
+    <button class="btn-unlock" onclick="checkCode()">Verify & Unlock File</button>
 
     <div id="download-area">
         <i class="fas fa-check-circle fa-2x" style="color: var(--success);"></i>
-        <h3>Payment Verified!</h3>
-        <p style="font-size: 0.85rem; color: #555;">Click the button below to save your file.</p>
-        <a id="final-link" href="#" class="btn-final" download>Download Now</a>
+        <h3 style="margin: 10px 0;">Payment Verified!</h3>
+        <p style="font-size: 0.85rem; color: #555;">Your download link is ready below.</p>
+        <a id="final-link" href="#" class="btn-final" download target="_blank">Download Now</a>
     </div>
 </div>
 
 <script>
-    // 1. Get File Info from URL
+    // 1. Get Parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const fileName = urlParams.get('file') || "Document.pdf";
-    const folder = urlParams.get('folder') || "PRO";
+    const fileName = urlParams.get('file');
+    const folder = urlParams.get('folder');
     const myPhone = "254746357349";
 
-    // 2. Display the name nicely
-    document.getElementById('file-name').innerText = fileName.replace('.pdf', '').replace(/_/g, ' ');
-    
-    // 3. Setup WhatsApp link with the NEW PRICE
-    document.getElementById('whatsapp-link').href = `https://wa.me/${myPhone}?text=Hello Mr. Peter, I have paid Ksh 50 for ${fileName}. Please send my unlock code.`;
+    // 2. Setup Page content
+    if (fileName) {
+        document.getElementById('file-name-display').innerText = fileName.replace('.pdf', '').replace(/_/g, ' ');
+        
+        // Dynamic WhatsApp Message
+        const message = encodeURIComponent(`Hello Mr. Peter, I have paid Ksh 50 for the document: ${fileName} from the ${folder} folder. Please send my unlock code.`);
+        document.getElementById('whatsapp-link').href = `https://wa.me/${myPhone}?text=${message}`;
+    } else {
+        document.getElementById('file-name-display').innerText = "Resource Not Selected";
+    }
 
-    // 4. Verification Logic
+    // 3. Verification Logic
     function checkCode() {
         const input = document.getElementById('unlock-input').value.trim();
         
-        // --- YOUR CURRENT ACTIVE CODE ---
+        // MASTER CODE (Change this as needed)
         const correctCode = "2026"; 
 
         if (input === correctCode) {
+            // Success State
             document.getElementById('download-area').style.display = 'block';
             
-            // Construct the path: /documents/FOLDER/FILE.pdf
+            // Build the download path: /documents/folder/filename.pdf
+            // We use the full relative path so it finds it in your repo folders
             const downloadPath = `documents/${folder}/${fileName}`;
             document.getElementById('final-link').href = downloadPath;
             
-            // Hide payment inputs
+            // UI Cleanup
             document.querySelector('.input-group').style.display = 'none';
             document.querySelector('.btn-unlock').style.display = 'none';
             document.getElementById('whatsapp-link').style.display = 'none';
+            document.querySelector('.mpesa-header').style.opacity = '0.5';
             
-            // Smoothly scroll to the download button
             document.getElementById('download-area').scrollIntoView({ behavior: 'smooth' });
         } else {
-            alert("Incorrect code. Please ensure you have paid and received the correct code from Mr. Peter on WhatsApp.");
+            alert("❌ Access Denied: Please enter the correct code received from Mr. Peter.");
         }
     }
 </script>
