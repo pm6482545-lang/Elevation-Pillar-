@@ -64,6 +64,20 @@
         .nav-card:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .nav-card i { font-size: 1.8rem; color: var(--cobalt); background: var(--sky-blue); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
 
+        /* RESPONSIVE FACEBOOK FEED CSS */
+        .fb-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 0 5%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        .fb-page, .fb-page span, .fb-page iframe {
+            width: 100% !important;
+        }
+
         /* GLOBAL FOOTER */
         footer { background: var(--cobalt); color: white; padding: 40px 5% 20px; text-align: center; margin-top: auto; border-top: 4px solid var(--gold); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
@@ -76,6 +90,9 @@
     </style>
 </head>
 <body>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0"></script>
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -137,6 +154,21 @@
                 <div><h3>Video Classes</h3><p>Watch and Learn on YouTube.</p></div>
             </a>
         </div>
+
+        <section class="fb-container">
+            <div class="fb-page" 
+                 data-href="https://www.facebook.com/profile.php?id=61578431138477" 
+                 data-tabs="timeline" 
+                 data-width="500" 
+                 data-small-header="false" 
+                 data-adapt-container-width="true" 
+                 data-hide-cover="false" 
+                 data-show-facepile="true">
+                <blockquote cite="https://www.facebook.com/profile.php?id=61578431138477" class="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/profile.php?id=61578431138477">Georgex Graphics</a>
+                </blockquote>
+            </div>
+        </section>
     </main>
 
     <footer>
